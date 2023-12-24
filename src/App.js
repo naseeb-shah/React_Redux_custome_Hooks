@@ -1,22 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
 
+import { useSelector, useDispatch } from "react-redux";
+import { Increment } from "./redux/action";
+import DarkModeToggle from "./customhook/toggle";
+import { useCallback } from "react";
+import { useCount } from "./customhook/myhook";
 function App() {
+  const countSimple = useSelector((state) => state.count);
+  const [count, incrementBy20] = useCount();
+  const dispatch = useDispatch();
+  console.log(count);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <DarkModeToggle />
+        <h2>{count}</h2>
+        <h2>{countSimple}</h2>
+
+        <button onClick={() => dispatch(Increment())}>Increment</button>
+        <button onClick={() => incrementBy20()}>Increment20</button>
       </header>
     </div>
   );
